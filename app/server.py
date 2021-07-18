@@ -1,6 +1,7 @@
 import aiohttp
 import asyncio
 import uvicorn
+import gzip
 from fastai import *
 from fastai.vision import *
 from io import BytesIO
@@ -25,7 +26,7 @@ async def download_file(url, dest):
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             data = await response.read()
-            with open(dest, 'wb') as f:
+            with gzip.open(dest, 'wb') as f:
                 f.write(data)
 
 
