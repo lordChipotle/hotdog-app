@@ -9,8 +9,8 @@ from starlette.applications import Starlette
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import HTMLResponse, JSONResponse
 from starlette.staticfiles import StaticFiles
-
-export_file_url = 'https://www.icloud.com/iclouddrive/0gW-kF8UwJPkFGfgrQXZmZ4rw#Hotdogclassifier'
+# share link: https://drive.google.com/file/d/1qqyGAbP-VHmWozlWMQ0xQ0vxxAoO0lT4/view?usp=sharing
+export_file_url = 'https://docs.google.com/uc?export=download&id=1qqyGAbP-VHmWozlWMQ0xQ0vxxAoO0lT4'
 export_file_name = 'Hotdogclassifier.pkl'
 
 classes = ['Hot_dog','Not_Hot_dog']
