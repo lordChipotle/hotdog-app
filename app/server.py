@@ -9,11 +9,11 @@ from starlette.applications import Starlette
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import HTMLResponse, JSONResponse
 from starlette.staticfiles import StaticFiles
-# share link: https://drive.google.com/file/d/1qqyGAbP-VHmWozlWMQ0xQ0vxxAoO0lT4/view?usp=sharing
-export_file_url = 'https://docs.google.com/uc?export=download&id=1qqyGAbP-VHmWozlWMQ0xQ0vxxAoO0lT4'
-export_file_name = 'Hotdogclassifier.pkl'
+# share link: https://drive.google.com/file/d/1xVA6UaYuLhMkDyC5QqZT03L4ki8E5sbk/view?usp=sharing
+export_file_url = 'https://docs.google.com/uc?export=download&id=1xVA6UaYuLhMkDyC5QqZT03L4ki8E5sbk'
+export_file_name = 'exporthotdog.pkl'
 
-classes = ['Hot_dog','Not_Hot_dog']
+classes = ['Hotdog','NotHotdog']
 path = Path(__file__).parent
 
 app = Starlette()
