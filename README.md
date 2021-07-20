@@ -1,6 +1,6 @@
 # The Hotdog-Not-Hotdog App is running on Fast.ai via [Render](https://render.com)
 
-The app can be accessed via https://fastai-v3.onrender.com. Test it out with hotdog-ish looking images!
+The app can be accessed via https://hotdog-not-hotdog.onrender.com. Test it out with hotdog-ish looking images!
 
 
 A detailed notebook of how we created this can also be found here:
