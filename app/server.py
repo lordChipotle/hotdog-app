@@ -2,6 +2,7 @@ import aiohttp
 import asyncio
 import uvicorn
 import gzip
+import requests
 from fastai import *
 from fastai.vision import *
 from io import BytesIO
@@ -12,13 +13,44 @@ from starlette.staticfiles import StaticFiles
 # share link: https://drive.google.com/file/d/1xVA6UaYuLhMkDyC5QqZT03L4ki8E5sbk/view?usp=sharing
 export_file_url = 'https://docs.google.com/uc?export=download&id=1xVA6UaYuLhMkDyC5QqZT03L4ki8E5sbk'
 export_file_name = 'exporthotdog.pkl'
-
+export_file_id = '1xVA6UaYuLhMkDyC5QqZT03L4ki8E5sbk'
 classes = ['Hotdog','NotHotdog']
 path = Path(__file__).parent
 
 app = Starlette()
 app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_headers=['X-Requested-With', 'Content-Type'])
 app.mount('/static', StaticFiles(directory='app/static'))
+
+
+
+def download_file_from_google_drive(id, destination):
+    def get_confirm_token(response):
+        for key, value in response.cookies.items():
+            if key.startswith('download_warning'):
+                return value
+
+        return None
+
+    def save_response_content(response, destination):
+        CHUNK_SIZE = 32768
+
+        with open(destination, "wb") as f:
+            for chunk in response.iter_content(CHUNK_SIZE):
+                if chunk: # filter out keep-alive new chunks
+                    f.write(chunk)
+
+    URL = "https://docs.google.com/uc?export=download"
+
+    session = requests.Session()
+
+    response = session.get(URL, params = { 'id' : id }, stream = True)
+    token = get_confirm_token(response)
+
+    if token:
+        params = { 'id' : id, 'confirm' : token }
+        response = session.get(URL, params = params, stream = True)
+
+    save_response_content(response, destination)    
 
 
 async def download_file(url, dest):
@@ -31,7 +63,7 @@ async def download_file(url, dest):
 
 
 async def setup_learner():
-    await download_file(export_file_url, path / export_file_name)
+    await download_file_from_google_drive(export_file_id, path / export_file_name)
     try:
         learn = load_learner(path, export_file_name)
         return learn
